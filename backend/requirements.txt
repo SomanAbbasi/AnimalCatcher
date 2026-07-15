@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+supabase
+# OpenAI-compatible SDK used as the OpenRouter client (base_url → openrouter.ai)
+openai
+pydantic
+httpx
+python-dotenv
