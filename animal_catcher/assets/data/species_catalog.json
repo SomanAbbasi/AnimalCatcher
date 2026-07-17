@@ -1,0 +1,1433 @@
+[
+  {
+    "taxon_id": 118552,
+    "dex_number": 1,
+    "name": "Domestic Cat",
+    "scientific_name": "Felis catus",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/129658776/medium.jpg"
+  },
+  {
+    "taxon_id": 47144,
+    "dex_number": 2,
+    "name": "Domestic Dog",
+    "scientific_name": "Canis familiaris",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/307568930/medium.jpg"
+  },
+  {
+    "taxon_id": 42069,
+    "dex_number": 3,
+    "name": "Red Fox",
+    "scientific_name": "Vulpes vulpes",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/265916780/medium.jpg"
+  },
+  {
+    "taxon_id": 42048,
+    "dex_number": 4,
+    "name": "Gray Wolf",
+    "scientific_name": "Canis lupus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/43410580/medium.jpg"
+  },
+  {
+    "taxon_id": 41663,
+    "dex_number": 5,
+    "name": "Raccoon",
+    "scientific_name": "Procyon lotor",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/290431922/medium.jpeg"
+  },
+  {
+    "taxon_id": 46017,
+    "dex_number": 6,
+    "name": "Eastern Gray Squirrel",
+    "scientific_name": "Sciurus carolinensis",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/22144449/medium.jpg"
+  },
+  {
+    "taxon_id": 46001,
+    "dex_number": 7,
+    "name": "Red Squirrel",
+    "scientific_name": "Sciurus vulgaris",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/6235808/medium.jpg"
+  },
+  {
+    "taxon_id": 43151,
+    "dex_number": 8,
+    "name": "European Rabbit",
+    "scientific_name": "Oryctolagus cuniculus",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/520690657/medium.jpg"
+  },
+  {
+    "taxon_id": 44576,
+    "dex_number": 9,
+    "name": "Brown Rat",
+    "scientific_name": "Rattus norvegicus",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/614470240/medium.jpg"
+  },
+  {
+    "taxon_id": 44705,
+    "dex_number": 10,
+    "name": "House Mouse",
+    "scientific_name": "Mus musculus",
+    "category": "Mammal",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/451428449/medium.jpeg"
+  },
+  {
+    "taxon_id": 42223,
+    "dex_number": 11,
+    "name": "White-tailed Deer",
+    "scientific_name": "Odocoileus virginianus",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/110157765/medium.jpg"
+  },
+  {
+    "taxon_id": 204113,
+    "dex_number": 12,
+    "name": "Red Deer",
+    "scientific_name": "Cervus elaphus",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446963283/medium.jpeg"
+  },
+  {
+    "taxon_id": 522193,
+    "dex_number": 13,
+    "name": "Moose",
+    "scientific_name": "Alces alces",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/335160686/medium.jpg"
+  },
+  {
+    "taxon_id": 42408,
+    "dex_number": 14,
+    "name": "American Bison",
+    "scientific_name": "Bison bison",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/297923496/medium.jpg"
+  },
+  {
+    "taxon_id": 41641,
+    "dex_number": 15,
+    "name": "Brown Bear",
+    "scientific_name": "Ursus arctos",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1491897/medium.jpg"
+  },
+  {
+    "taxon_id": 41638,
+    "dex_number": 16,
+    "name": "American Black Bear",
+    "scientific_name": "Ursus americanus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/693472802/medium.jpg"
+  },
+  {
+    "taxon_id": 41644,
+    "dex_number": 17,
+    "name": "Polar Bear",
+    "scientific_name": "Ursus maritimus",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/102785980/medium.jpg"
+  },
+  {
+    "taxon_id": 41659,
+    "dex_number": 18,
+    "name": "Giant Panda",
+    "scientific_name": "Ailuropoda melanoleuca",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/150277588/medium.jpg"
+  },
+  {
+    "taxon_id": 41653,
+    "dex_number": 19,
+    "name": "Red Panda",
+    "scientific_name": "Ailurus fulgens",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/26989188/medium.jpeg"
+  },
+  {
+    "taxon_id": 41964,
+    "dex_number": 20,
+    "name": "Lion",
+    "scientific_name": "Panthera leo",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/9225318/medium.jpg"
+  },
+  {
+    "taxon_id": 41967,
+    "dex_number": 21,
+    "name": "Tiger",
+    "scientific_name": "Panthera tigris",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/13207883/medium.jpg"
+  },
+  {
+    "taxon_id": 41963,
+    "dex_number": 22,
+    "name": "Leopard",
+    "scientific_name": "Panthera pardus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/8666580/medium.jpeg"
+  },
+  {
+    "taxon_id": 74831,
+    "dex_number": 23,
+    "name": "Snow Leopard",
+    "scientific_name": "Panthera uncia",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/16308659/medium.jpg"
+  },
+  {
+    "taxon_id": 41955,
+    "dex_number": 24,
+    "name": "Cheetah",
+    "scientific_name": "Acinonyx jubatus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/57582224/medium.jpg"
+  },
+  {
+    "taxon_id": 41970,
+    "dex_number": 25,
+    "name": "Jaguar",
+    "scientific_name": "Panthera onca",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://static.inaturalist.org/photos/51015966/medium.jpg"
+  },
+  {
+    "taxon_id": 43694,
+    "dex_number": 26,
+    "name": "African Bush Elephant",
+    "scientific_name": "Loxodonta africana",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/93674728/medium.jpg"
+  },
+  {
+    "taxon_id": 43697,
+    "dex_number": 27,
+    "name": "Asian Elephant",
+    "scientific_name": "Elephas maximus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2035244/medium.jpg"
+  },
+  {
+    "taxon_id": 42157,
+    "dex_number": 28,
+    "name": "Giraffe",
+    "scientific_name": "Giraffa camelopardalis",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/308239525/medium.jpg"
+  },
+  {
+    "taxon_id": 42149,
+    "dex_number": 29,
+    "name": "Common Hippopotamus",
+    "scientific_name": "Hippopotamus amphibius",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/13896177/medium.jpg"
+  },
+  {
+    "taxon_id": 43348,
+    "dex_number": 30,
+    "name": "White Rhinoceros",
+    "scientific_name": "Ceratotherium simum",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/57287523/medium.jpg"
+  },
+  {
+    "taxon_id": 43335,
+    "dex_number": 31,
+    "name": "Plains Zebra",
+    "scientific_name": "Equus quagga",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/335469754/medium.jpg"
+  },
+  {
+    "taxon_id": 43577,
+    "dex_number": 32,
+    "name": "Common Chimpanzee",
+    "scientific_name": "Pan troglodytes",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/184174969/medium.jpeg"
+  },
+  {
+    "taxon_id": 43580,
+    "dex_number": 33,
+    "name": "Western Gorilla",
+    "scientific_name": "Gorilla gorilla",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/282241201/medium.jpg"
+  },
+  {
+    "taxon_id": 42983,
+    "dex_number": 34,
+    "name": "Koala",
+    "scientific_name": "Phascolarctos cinereus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/425371537/medium.jpeg"
+  },
+  {
+    "taxon_id": 1453439,
+    "dex_number": 35,
+    "name": "Red Kangaroo",
+    "scientific_name": "Osphranter rufus",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/164668615/medium.jpg"
+  },
+  {
+    "taxon_id": 43236,
+    "dex_number": 36,
+    "name": "Platypus",
+    "scientific_name": "Ornithorhynchus anatinus",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/430934363/medium.jpeg"
+  },
+  {
+    "taxon_id": 41482,
+    "dex_number": 37,
+    "name": "Common Bottlenose Dolphin",
+    "scientific_name": "Tursiops truncatus",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/611231392/medium.jpg"
+  },
+  {
+    "taxon_id": 41566,
+    "dex_number": 38,
+    "name": "Humpback Whale",
+    "scientific_name": "Megaptera novaeangliae",
+    "category": "Mammal",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/255461843/medium.jpg"
+  },
+  {
+    "taxon_id": 41708,
+    "dex_number": 39,
+    "name": "Harbor Seal",
+    "scientific_name": "Phoca vitulina",
+    "category": "Mammal",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/190781322/medium.jpg"
+  },
+  {
+    "taxon_id": 41860,
+    "dex_number": 40,
+    "name": "Sea Otter",
+    "scientific_name": "Enhydra lutris",
+    "category": "Mammal",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/311432614/medium.jpg"
+  },
+  {
+    "taxon_id": 3017,
+    "dex_number": 41,
+    "name": "Rock Pigeon",
+    "scientific_name": "Columba livia",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/466776975/medium.jpg"
+  },
+  {
+    "taxon_id": 13858,
+    "dex_number": 42,
+    "name": "House Sparrow",
+    "scientific_name": "Passer domesticus",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4608133/medium.jpg"
+  },
+  {
+    "taxon_id": 13094,
+    "dex_number": 43,
+    "name": "European Robin",
+    "scientific_name": "Erithacus rubecula",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/331946615/medium.jpeg"
+  },
+  {
+    "taxon_id": 12727,
+    "dex_number": 44,
+    "name": "American Robin",
+    "scientific_name": "Turdus migratorius",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/34859026/medium.jpg"
+  },
+  {
+    "taxon_id": 9083,
+    "dex_number": 45,
+    "name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/189434971/medium.jpg"
+  },
+  {
+    "taxon_id": 8229,
+    "dex_number": 46,
+    "name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/530721418/medium.jpg"
+  },
+  {
+    "taxon_id": 8021,
+    "dex_number": 47,
+    "name": "American Crow",
+    "scientific_name": "Corvus brachyrhynchos",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/24115/medium.jpg"
+  },
+  {
+    "taxon_id": 8010,
+    "dex_number": 48,
+    "name": "Common Raven",
+    "scientific_name": "Corvus corax",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/54389687/medium.jpg"
+  },
+  {
+    "taxon_id": 11901,
+    "dex_number": 49,
+    "name": "Barn Swallow",
+    "scientific_name": "Hirundo rustica",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/122469139/medium.jpg"
+  },
+  {
+    "taxon_id": 203153,
+    "dex_number": 50,
+    "name": "Great Tit",
+    "scientific_name": "Parus major",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/340613122/medium.jpg"
+  },
+  {
+    "taxon_id": 6930,
+    "dex_number": 51,
+    "name": "Mallard",
+    "scientific_name": "Anas platyrhynchos",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/95268822/medium.jpg"
+  },
+  {
+    "taxon_id": 6921,
+    "dex_number": 52,
+    "name": "Mute Swan",
+    "scientific_name": "Cygnus olor",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/264781420/medium.jpg"
+  },
+  {
+    "taxon_id": 7089,
+    "dex_number": 53,
+    "name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/181719420/medium.jpg"
+  },
+  {
+    "taxon_id": 4257,
+    "dex_number": 54,
+    "name": "American Flamingo",
+    "scientific_name": "Phoenicopterus ruber",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/108374016/medium.jpg"
+  },
+  {
+    "taxon_id": 4954,
+    "dex_number": 55,
+    "name": "Grey Heron",
+    "scientific_name": "Ardea cinerea",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/73516715/medium.jpg"
+  },
+  {
+    "taxon_id": 144455,
+    "dex_number": 56,
+    "name": "Great Egret",
+    "scientific_name": "Ardea alba",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/56653891/medium.jpg"
+  },
+  {
+    "taxon_id": 5074,
+    "dex_number": 57,
+    "name": "Golden Eagle",
+    "scientific_name": "Aquila chrysaetos",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/168362446/medium.jpg"
+  },
+  {
+    "taxon_id": 5305,
+    "dex_number": 58,
+    "name": "Bald Eagle",
+    "scientific_name": "Haliaeetus leucocephalus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341016703/medium.jpeg"
+  },
+  {
+    "taxon_id": 4647,
+    "dex_number": 59,
+    "name": "Peregrine Falcon",
+    "scientific_name": "Falco peregrinus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/212499566/medium.jpg"
+  },
+  {
+    "taxon_id": 116999,
+    "dex_number": 60,
+    "name": "Osprey",
+    "scientific_name": "Pandion haliaetus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/6903515/medium.jpg"
+  },
+  {
+    "taxon_id": 20445,
+    "dex_number": 61,
+    "name": "Barn Owl",
+    "scientific_name": "Tyto alba",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/165796939/medium.jpg"
+  },
+  {
+    "taxon_id": 20044,
+    "dex_number": 62,
+    "name": "Great Horned Owl",
+    "scientific_name": "Bubo virginianus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/14549085/medium.jpg"
+  },
+  {
+    "taxon_id": 144594,
+    "dex_number": 63,
+    "name": "Snowy Owl",
+    "scientific_name": "Bubo scandiacus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/150549757/medium.jpg"
+  },
+  {
+    "taxon_id": 204533,
+    "dex_number": 64,
+    "name": "European Herring Gull",
+    "scientific_name": "Larus argentatus",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/198439202/medium.jpeg"
+  },
+  {
+    "taxon_id": 4504,
+    "dex_number": 65,
+    "name": "Atlantic Puffin",
+    "scientific_name": "Fratercula arctica",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/63139388/medium.jpg"
+  },
+  {
+    "taxon_id": 3820,
+    "dex_number": 66,
+    "name": "Emperor Penguin",
+    "scientific_name": "Aptenodytes forsteri",
+    "category": "Bird",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/7229/medium.jpg"
+  },
+  {
+    "taxon_id": 3821,
+    "dex_number": 67,
+    "name": "King Penguin",
+    "scientific_name": "Aptenodytes patagonicus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602978114/medium.jpg"
+  },
+  {
+    "taxon_id": 2599,
+    "dex_number": 68,
+    "name": "Common Kingfisher",
+    "scientific_name": "Alcedo atthis",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/61266631/medium.jpg"
+  },
+  {
+    "taxon_id": 17871,
+    "dex_number": 69,
+    "name": "Great Spotted Woodpecker",
+    "scientific_name": "Dendrocopos major",
+    "category": "Bird",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/259132621/medium.jpeg"
+  },
+  {
+    "taxon_id": 6432,
+    "dex_number": 70,
+    "name": "Ruby-throated Hummingbird",
+    "scientific_name": "Archilochus colubris",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/221352761/medium.jpg"
+  },
+  {
+    "taxon_id": 19022,
+    "dex_number": 71,
+    "name": "Scarlet Macaw",
+    "scientific_name": "Ara macao",
+    "category": "Bird",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/233350330/medium.jpg"
+  },
+  {
+    "taxon_id": 19339,
+    "dex_number": 72,
+    "name": "Budgerigar",
+    "scientific_name": "Melopsittacus undulatus",
+    "category": "Bird",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/250803004/medium.jpg"
+  },
+  {
+    "taxon_id": 1204,
+    "dex_number": 73,
+    "name": "Indian Peafowl",
+    "scientific_name": "Pavo cristatus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/165318600/medium.jpg"
+  },
+  {
+    "taxon_id": 20526,
+    "dex_number": 74,
+    "name": "Common Ostrich",
+    "scientific_name": "Struthio camelus",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/2568822/medium.jpg"
+  },
+  {
+    "taxon_id": 18793,
+    "dex_number": 75,
+    "name": "Toco Toucan",
+    "scientific_name": "Ramphastos toco",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/63281117/medium.jpg"
+  },
+  {
+    "taxon_id": 7106,
+    "dex_number": 76,
+    "name": "Mandarin Duck",
+    "scientific_name": "Aix galericulata",
+    "category": "Bird",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/171955255/medium.jpg"
+  },
+  {
+    "taxon_id": 58612,
+    "dex_number": 77,
+    "name": "Goldfish",
+    "scientific_name": "Carassius auratus",
+    "category": "Fish",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/203973907/medium.jpg"
+  },
+  {
+    "taxon_id": 53911,
+    "dex_number": 78,
+    "name": "Common Carp",
+    "scientific_name": "Cyprinus carpio",
+    "category": "Fish",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2754663/medium.JPG"
+  },
+  {
+    "taxon_id": 47516,
+    "dex_number": 79,
+    "name": "Rainbow Trout",
+    "scientific_name": "Oncorhynchus mykiss",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/60921460/medium.jpg"
+  },
+  {
+    "taxon_id": 48648,
+    "dex_number": 80,
+    "name": "Atlantic Salmon",
+    "scientific_name": "Salmo salar",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/60703307/medium.jpg"
+  },
+  {
+    "taxon_id": 119391,
+    "dex_number": 81,
+    "name": "Orange Clownfish",
+    "scientific_name": "Amphiprion percula",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/72572329/medium.jpg"
+  },
+  {
+    "taxon_id": 130879,
+    "dex_number": 82,
+    "name": "Palette Surgeonfish",
+    "scientific_name": "Paracanthurus hepatus",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/30261643/medium.jpg"
+  },
+  {
+    "taxon_id": 50873,
+    "dex_number": 83,
+    "name": "Great White Shark",
+    "scientific_name": "Carcharodon carcharias",
+    "category": "Fish",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://static.inaturalist.org/photos/177202266/medium.jpeg"
+  },
+  {
+    "taxon_id": 52188,
+    "dex_number": 84,
+    "name": "Whale Shark",
+    "scientific_name": "Rhincodon typus",
+    "category": "Fish",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/519729370/medium.jpg"
+  },
+  {
+    "taxon_id": 52299,
+    "dex_number": 85,
+    "name": "Tiger Shark",
+    "scientific_name": "Galeocerdo cuvier",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/19051907/medium.jpg"
+  },
+  {
+    "taxon_id": 56764,
+    "dex_number": 86,
+    "name": "Scalloped Hammerhead",
+    "scientific_name": "Sphyrna lewini",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/86555463/medium.jpeg"
+  },
+  {
+    "taxon_id": 623966,
+    "dex_number": 87,
+    "name": "Giant Manta Ray",
+    "scientific_name": "Mobula birostris",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/33852153/medium.jpg"
+  },
+  {
+    "taxon_id": 114126,
+    "dex_number": 88,
+    "name": "Atlantic Bluefin Tuna",
+    "scientific_name": "Thunnus thynnus",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161933338/medium.jpeg"
+  },
+  {
+    "taxon_id": 115167,
+    "dex_number": 89,
+    "name": "Swordfish",
+    "scientific_name": "Xiphias gladius",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/11989857/medium.jpg"
+  },
+  {
+    "taxon_id": 47251,
+    "dex_number": 90,
+    "name": "Great Barracuda",
+    "scientific_name": "Sphyraena barracuda",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/64376618/medium.jpeg"
+  },
+  {
+    "taxon_id": 54540,
+    "dex_number": 91,
+    "name": "Lined Seahorse",
+    "scientific_name": "Hippocampus erectus",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/8837860/medium.jpg"
+  },
+  {
+    "taxon_id": 49601,
+    "dex_number": 92,
+    "name": "Ocean Sunfish",
+    "scientific_name": "Mola mola",
+    "category": "Fish",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/10424927/medium.jpeg"
+  },
+  {
+    "taxon_id": 121000,
+    "dex_number": 93,
+    "name": "Giant Moray",
+    "scientific_name": "Gymnothorax javanicus",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/247871410/medium.jpg"
+  },
+  {
+    "taxon_id": 94105,
+    "dex_number": 94,
+    "name": "European Eel",
+    "scientific_name": "Anguilla anguilla",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/21512695/medium.jpg"
+  },
+  {
+    "taxon_id": 55387,
+    "dex_number": 95,
+    "name": "Northern Pike",
+    "scientific_name": "Esox lucius",
+    "category": "Fish",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/486754787/medium.jpg"
+  },
+  {
+    "taxon_id": 49587,
+    "dex_number": 96,
+    "name": "Largemouth Bass",
+    "scientific_name": "Micropterus salmoides",
+    "category": "Fish",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/126577823/medium.jpg"
+  },
+  {
+    "taxon_id": 47219,
+    "dex_number": 97,
+    "name": "Western Honey Bee",
+    "scientific_name": "Apis mellifera",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/2369526/medium.jpg"
+  },
+  {
+    "taxon_id": 57516,
+    "dex_number": 98,
+    "name": "Buff-tailed Bumblebee",
+    "scientific_name": "Bombus terrestris",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/346252775/medium.jpg"
+  },
+  {
+    "taxon_id": 48662,
+    "dex_number": 99,
+    "name": "Monarch Butterfly",
+    "scientific_name": "Danaus plexippus",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/227923335/medium.jpeg"
+  },
+  {
+    "taxon_id": 55626,
+    "dex_number": 100,
+    "name": "Cabbage White",
+    "scientific_name": "Pieris rapae",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/28420401/medium.jpg"
+  },
+  {
+    "taxon_id": 55641,
+    "dex_number": 101,
+    "name": "Common Blue",
+    "scientific_name": "Polyommatus icarus",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/690103339/medium.jpg"
+  },
+  {
+    "taxon_id": 207977,
+    "dex_number": 102,
+    "name": "European Peacock",
+    "scientific_name": "Aglais io",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4710619/medium.jpg"
+  },
+  {
+    "taxon_id": 51702,
+    "dex_number": 103,
+    "name": "Seven-spot Ladybird",
+    "scientific_name": "Coccinella septempunctata",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/267168450/medium.jpg"
+  },
+  {
+    "taxon_id": 67731,
+    "dex_number": 104,
+    "name": "Common Green Darner",
+    "scientific_name": "Anax junius",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/10604112/medium.jpg"
+  },
+  {
+    "taxon_id": 94043,
+    "dex_number": 105,
+    "name": "Emperor Dragonfly",
+    "scientific_name": "Anax imperator",
+    "category": "Insect",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/205761223/medium.jpeg"
+  },
+  {
+    "taxon_id": 129350,
+    "dex_number": 106,
+    "name": "Common Eastern Firefly",
+    "scientific_name": "Photinus pyralis",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4202184/medium.jpg"
+  },
+  {
+    "taxon_id": 53905,
+    "dex_number": 107,
+    "name": "European Mantis",
+    "scientific_name": "Mantis religiosa",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/180063407/medium.jpg"
+  },
+  {
+    "taxon_id": 120156,
+    "dex_number": 108,
+    "name": "House Fly",
+    "scientific_name": "Musca domestica",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/163079204/medium.jpg"
+  },
+  {
+    "taxon_id": 130032,
+    "dex_number": 109,
+    "name": "Common House Mosquito",
+    "scientific_name": "Culex pipiens",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/190302/medium.jpg"
+  },
+  {
+    "taxon_id": 71248,
+    "dex_number": 110,
+    "name": "Field Cricket",
+    "scientific_name": "Gryllus campestris",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/157317382/medium.jpg"
+  },
+  {
+    "taxon_id": 201627,
+    "dex_number": 111,
+    "name": "Migratory Locust",
+    "scientific_name": "Locusta migratoria",
+    "category": "Insect",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/5185296/medium.jpg"
+  },
+  {
+    "taxon_id": 61749,
+    "dex_number": 112,
+    "name": "European Stag Beetle",
+    "scientific_name": "Lucanus cervus",
+    "category": "Insect",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/348296511/medium.jpg"
+  },
+  {
+    "taxon_id": 1065735,
+    "dex_number": 113,
+    "name": "Hercules Beetle",
+    "scientific_name": "Dynastes hercules",
+    "category": "Insect",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/234794325/medium.jpeg"
+  },
+  {
+    "taxon_id": 125071,
+    "dex_number": 114,
+    "name": "Atlas Moth",
+    "scientific_name": "Attacus atlas",
+    "category": "Insect",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/416188682/medium.jpg"
+  },
+  {
+    "taxon_id": 501625,
+    "dex_number": 115,
+    "name": "Meadow Grasshopper",
+    "scientific_name": "Pseudochorthippus parallelus",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/685653964/medium.jpg"
+  },
+  {
+    "taxon_id": 55213,
+    "dex_number": 116,
+    "name": "Black Garden Ant",
+    "scientific_name": "Lasius niger",
+    "category": "Insect",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/129815566/medium.jpg"
+  },
+  {
+    "taxon_id": 39659,
+    "dex_number": 117,
+    "name": "Green Sea Turtle",
+    "scientific_name": "Chelonia mydas",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/197457958/medium.jpg"
+  },
+  {
+    "taxon_id": 39665,
+    "dex_number": 118,
+    "name": "Loggerhead Sea Turtle",
+    "scientific_name": "Caretta caretta",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/176772831/medium.jpeg"
+  },
+  {
+    "taxon_id": 39782,
+    "dex_number": 119,
+    "name": "Pond Slider",
+    "scientific_name": "Trachemys scripta",
+    "category": "Reptile",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/120834277/medium.jpg"
+  },
+  {
+    "taxon_id": 539452,
+    "dex_number": 120,
+    "name": "Galapagos Tortoise",
+    "scientific_name": "Chelonoidis niger",
+    "category": "Reptile",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/37748207/medium.jpg"
+  },
+  {
+    "taxon_id": 39449,
+    "dex_number": 121,
+    "name": "Komodo Dragon",
+    "scientific_name": "Varanus komodoensis",
+    "category": "Reptile",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1892238/medium.jpg"
+  },
+  {
+    "taxon_id": 35342,
+    "dex_number": 122,
+    "name": "Green Iguana",
+    "scientific_name": "Iguana iguana",
+    "category": "Reptile",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/356025444/medium.jpg"
+  },
+  {
+    "taxon_id": 34675,
+    "dex_number": 123,
+    "name": "Leopard Gecko",
+    "scientific_name": "Eublepharis macularius",
+    "category": "Reptile",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/107932713/medium.jpg"
+  },
+  {
+    "taxon_id": 32864,
+    "dex_number": 124,
+    "name": "Mediterranean Chameleon",
+    "scientific_name": "Chamaeleo chamaeleon",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/57392886/medium.jpg"
+  },
+  {
+    "taxon_id": 341972,
+    "dex_number": 125,
+    "name": "Nile Crocodile",
+    "scientific_name": "Crocodylus niloticus",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/545741360/medium.jpg"
+  },
+  {
+    "taxon_id": 26159,
+    "dex_number": 126,
+    "name": "American Alligator",
+    "scientific_name": "Alligator mississippiensis",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446571555/medium.jpg"
+  },
+  {
+    "taxon_id": 32158,
+    "dex_number": 127,
+    "name": "Ball Python",
+    "scientific_name": "Python regius",
+    "category": "Reptile",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/127328258/medium.jpeg"
+  },
+  {
+    "taxon_id": 491869,
+    "dex_number": 128,
+    "name": "Reticulated Python",
+    "scientific_name": "Malayopython reticulatus",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/107708381/medium.jpg"
+  },
+  {
+    "taxon_id": 30472,
+    "dex_number": 129,
+    "name": "King Cobra",
+    "scientific_name": "Ophiophagus hannah",
+    "category": "Reptile",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/307874083/medium.jpeg"
+  },
+  {
+    "taxon_id": 966698,
+    "dex_number": 130,
+    "name": "Common European Adder",
+    "scientific_name": "Vipera berus",
+    "category": "Reptile",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://static.inaturalist.org/photos/223270931/medium.jpg"
+  },
+  {
+    "taxon_id": 73887,
+    "dex_number": 131,
+    "name": "Corn Snake",
+    "scientific_name": "Pantherophis guttatus",
+    "category": "Reptile",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/457255500/medium.jpg"
+  },
+  {
+    "taxon_id": 25591,
+    "dex_number": 132,
+    "name": "Common Frog",
+    "scientific_name": "Rana temporaria",
+    "category": "Amphibian",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/171173/medium.jpg"
+  },
+  {
+    "taxon_id": 65979,
+    "dex_number": 133,
+    "name": "American Bullfrog",
+    "scientific_name": "Lithobates catesbeianus",
+    "category": "Amphibian",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/519633752/medium.jpg"
+  },
+  {
+    "taxon_id": 23702,
+    "dex_number": 134,
+    "name": "Red-eyed Tree Frog",
+    "scientific_name": "Agalychnis callidryas",
+    "category": "Amphibian",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/173688685/medium.jpg"
+  },
+  {
+    "taxon_id": 21217,
+    "dex_number": 135,
+    "name": "Golden Poison Frog",
+    "scientific_name": "Phyllobates terribilis",
+    "category": "Amphibian",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://static.inaturalist.org/photos/86201361/medium.jpg"
+  },
+  {
+    "taxon_id": 326296,
+    "dex_number": 136,
+    "name": "Common Toad",
+    "scientific_name": "Bufo bufo",
+    "category": "Amphibian",
+    "rarity": "Common",
+    "reference_photo_url": "https://static.inaturalist.org/photos/585412909/medium.jpg"
+  },
+  {
+    "taxon_id": 27726,
+    "dex_number": 137,
+    "name": "Fire Salamander",
+    "scientific_name": "Salamandra salamandra",
+    "category": "Amphibian",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/159805189/medium.jpg"
+  },
+  {
+    "taxon_id": 26777,
+    "dex_number": 138,
+    "name": "Axolotl",
+    "scientific_name": "Ambystoma mexicanum",
+    "category": "Amphibian",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/87949947/medium.jpg"
+  },
+  {
+    "taxon_id": 27718,
+    "dex_number": 139,
+    "name": "Great Crested Newt",
+    "scientific_name": "Triturus cristatus",
+    "category": "Amphibian",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/170874060/medium.jpg"
+  },
+  {
+    "taxon_id": 26749,
+    "dex_number": 140,
+    "name": "Tiger Salamander",
+    "scientific_name": "Ambystoma tigrinum",
+    "category": "Amphibian",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/7796623/medium.jpg"
+  },
+  {
+    "taxon_id": 1668858,
+    "dex_number": 141,
+    "name": "American Green Tree Frog",
+    "scientific_name": "Dryophytes cinereus",
+    "category": "Amphibian",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4065940/medium.jpg"
+  },
+  {
+    "taxon_id": 52628,
+    "dex_number": 142,
+    "name": "European Garden Spider",
+    "scientific_name": "Araneus diadematus",
+    "category": "Arachnid",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/156036389/medium.jpg"
+  },
+  {
+    "taxon_id": 205163,
+    "dex_number": 143,
+    "name": "Goliath Birdeater",
+    "scientific_name": "Theraphosa blondi",
+    "category": "Arachnid",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://static.inaturalist.org/photos/16111641/medium.jpeg"
+  },
+  {
+    "taxon_id": 264094,
+    "dex_number": 144,
+    "name": "Mexican Redknee Tarantula",
+    "scientific_name": "Brachypelma hamorii",
+    "category": "Arachnid",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4016251/medium.JPG"
+  },
+  {
+    "taxon_id": 47382,
+    "dex_number": 145,
+    "name": "Western Black Widow",
+    "scientific_name": "Latrodectus hesperus",
+    "category": "Arachnid",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/10922611/medium.jpg"
+  },
+  {
+    "taxon_id": 50181,
+    "dex_number": 146,
+    "name": "Brown Recluse",
+    "scientific_name": "Loxosceles reclusa",
+    "category": "Arachnid",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/40321490/medium.jpeg"
+  },
+  {
+    "taxon_id": 68901,
+    "dex_number": 147,
+    "name": "Zebra Jumping Spider",
+    "scientific_name": "Salticus scenicus",
+    "category": "Arachnid",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/306430245/medium.jpg"
+  },
+  {
+    "taxon_id": 127713,
+    "dex_number": 148,
+    "name": "Emperor Scorpion",
+    "scientific_name": "Pandinus imperator",
+    "category": "Arachnid",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/169448714/medium.jpg"
+  },
+  {
+    "taxon_id": 179686,
+    "dex_number": 149,
+    "name": "Deathstalker",
+    "scientific_name": "Leiurus quinquestriatus",
+    "category": "Arachnid",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/575882073/medium.jpg"
+  },
+  {
+    "taxon_id": 480298,
+    "dex_number": 150,
+    "name": "Brown Garden Snail",
+    "scientific_name": "Cornu aspersum",
+    "category": "Mollusk",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/16302570/medium.jpg"
+  },
+  {
+    "taxon_id": 61523,
+    "dex_number": 151,
+    "name": "Roman Snail",
+    "scientific_name": "Helix pomatia",
+    "category": "Mollusk",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2536439/medium.jpg"
+  },
+  {
+    "taxon_id": 49315,
+    "dex_number": 152,
+    "name": "Common Octopus",
+    "scientific_name": "Octopus vulgaris",
+    "category": "Mollusk",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/166419253/medium.jpeg"
+  },
+  {
+    "taxon_id": 48863,
+    "dex_number": 153,
+    "name": "Giant Pacific Octopus",
+    "scientific_name": "Enteroctopus dofleini",
+    "category": "Mollusk",
+    "rarity": "Legendary",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/174792488/medium.jpg"
+  },
+  {
+    "taxon_id": 151429,
+    "dex_number": 154,
+    "name": "Common Cuttlefish",
+    "scientific_name": "Sepia officinalis",
+    "category": "Mollusk",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/269553588/medium.jpeg"
+  },
+  {
+    "taxon_id": 324558,
+    "dex_number": 155,
+    "name": "European Squid",
+    "scientific_name": "Loligo vulgaris",
+    "category": "Mollusk",
+    "rarity": "Uncommon",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/102663129/medium.jpg"
+  },
+  {
+    "taxon_id": 130213,
+    "dex_number": 156,
+    "name": "Common Whelk",
+    "scientific_name": "Buccinum undatum",
+    "category": "Mollusk",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4405193/medium.jpg"
+  },
+  {
+    "taxon_id": 62470,
+    "dex_number": 157,
+    "name": "Leopard Slug",
+    "scientific_name": "Limax maximus",
+    "category": "Mollusk",
+    "rarity": "Common",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1712779/medium.jpg"
+  },
+  {
+    "taxon_id": 114396,
+    "dex_number": 158,
+    "name": "Giant Clam",
+    "scientific_name": "Tridacna gigas",
+    "category": "Mollusk",
+    "rarity": "Rare",
+    "reference_photo_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/238306910/medium.jpg"
+  },
+  {
+    "taxon_id": 123467,
+    "dex_number": 159,
+    "name": "Chambered Nautilus",
+    "scientific_name": "Nautilus pompilius",
+    "category": "Mollusk",
+    "rarity": "Rare",
+    "reference_photo_url": "https://static.inaturalist.org/photos/58051104/medium.jpg"
+  }
+]

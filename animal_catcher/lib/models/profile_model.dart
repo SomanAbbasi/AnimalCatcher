@@ -90,6 +90,8 @@ class PlayerProfile {
     this.locationLat,
     this.locationLng,
     this.createdAt,
+    this.xp = 0,
+    this.level = 1,
   });
 
   final String userId;
@@ -101,6 +103,25 @@ class PlayerProfile {
   final double? locationLat;
   final double? locationLng;
   final DateTime? createdAt;
+  final int xp;
+  final int level;
+
+  /// XP floor of the current level: 100 * (level - 1)^2.
+  int get currentLevelFloor => 100 * (level - 1) * (level - 1);
+
+  /// XP threshold that unlocks the next level: 100 * level^2.
+  int get nextLevelThreshold => 100 * level * level;
+
+  /// XP accumulated within the current level band.
+  int get xpIntoLevel => (xp - currentLevelFloor).clamp(0, 1 << 30);
+
+  /// XP span of the current level band.
+  int get xpSpanForLevel =>
+      (nextLevelThreshold - currentLevelFloor).clamp(1, 1 << 30);
+
+  /// Progress through the current level in the range [0, 1].
+  double get levelProgress =>
+      (xpIntoLevel / xpSpanForLevel).clamp(0.0, 1.0);
 
   factory PlayerProfile.fromJson(Map<String, dynamic> json) {
     return PlayerProfile(
@@ -115,6 +136,8 @@ class PlayerProfile {
       createdAt: json['created_at'] != null
           ? DateTime.tryParse(json['created_at'].toString())
           : null,
+      xp: _asInt(json['xp'], 0),
+      level: _asInt(json['level'], 1),
     );
   }
 
@@ -128,6 +151,8 @@ class PlayerProfile {
         'location_lat': locationLat,
         'location_lng': locationLng,
         'created_at': createdAt?.toIso8601String(),
+        'xp': xp,
+        'level': level,
       };
 
   PlayerProfile copyWith({
@@ -138,6 +163,8 @@ class PlayerProfile {
     StartingClass? startingClass,
     double? locationLat,
     double? locationLng,
+    int? xp,
+    int? level,
   }) {
     return PlayerProfile(
       userId: userId,
@@ -149,6 +176,8 @@ class PlayerProfile {
       locationLat: locationLat ?? this.locationLat,
       locationLng: locationLng ?? this.locationLng,
       createdAt: createdAt,
+      xp: xp ?? this.xp,
+      level: level ?? this.level,
     );
   }
 

@@ -58,6 +58,7 @@ dependencies:
   vector_math: ^2.1.4              # Matrix maths for kinetic card animations
   auto_size_text: ^3.0.0
   image_picker: ^1.2.3
+  url_launcher: ^6.3.0            # Open the species Wikipedia article
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
 
   assets:
     - assets/images/card_back.png
+    - assets/data/species_catalog.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

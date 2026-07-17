@@ -28,28 +28,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   static const _loreSlides = [
     _Lore(
-      title: 'THE RIFT IS OPEN',
+      title: 'EXPLORE THE WILD',
       body:
-          'Real-world animals are channeling primal energy templates. Every '
-          'creature you meet can be captured as a living battle card.',
-      icon: Icons.blur_on_rounded,
-      color: AppColors.neonPurple,
+          'Wildlife is everywhere — parks, forests, beaches and city streets. '
+          'Every animal you meet can be added to your personal collection.',
+      icon: Icons.travel_explore_rounded,
+      color: AppColors.accent,
     ),
     _Lore(
-      title: 'SCAN THE WILD',
+      title: 'SNAP A PHOTO',
       body:
-          'Point your scanner at any real animal. The rift analyses its species '
-          'and mints its stats, rarity, and battle-ready profile.',
+          'Point your camera at any real animal. We identify the species in '
+          'seconds and log it to your dex with a reference photo.',
       icon: Icons.center_focus_strong_rounded,
-      color: AppColors.neonGreen,
+      color: AppColors.accent,
     ),
     _Lore(
-      title: 'BATTLE FOR DOMINION',
+      title: 'COMPLETE YOUR DEX',
       body:
-          'Assemble a team and clash in tactical, turn-based coliseum duels. '
-          'Charge your Ultimate and unleash devastation.',
-      icon: Icons.bolt_rounded,
-      color: AppColors.neonPink,
+          'Discover species across every rarity tier, unlock achievements, '
+          'and compare your collection with friends.',
+      icon: Icons.grid_view_rounded,
+      color: AppColors.accent,
     ),
   ];
 
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: RadialGradient(
             center: Alignment.topCenter,
             radius: 1.3,
-            colors: [Color(0xFF141033), AppColors.background],
+            colors: [Color(0xFF16211A), AppColors.background],
           ),
         ),
         child: SafeArea(
@@ -127,9 +127,6 @@ class _LoreView extends StatelessWidget {
               shape: BoxShape.circle,
               color: lore.color.withValues(alpha: 0.12),
               border: Border.all(color: lore.color, width: 1.6),
-              boxShadow: [
-                BoxShadow(color: lore.color.withValues(alpha: 0.5), blurRadius: 40),
-              ],
             ),
             child: Icon(lore.icon, size: 72, color: lore.color),
           ),
@@ -356,7 +353,7 @@ class _AuthViewState extends State<_AuthView> {
               const SizedBox(height: 14),
               NeonButton(
                 label: 'Continue as Guest (Test Mode)',
-                color: AppColors.rarityLegendary,
+                color: AppColors.accent,
                 icon: Icons.bug_report_rounded,
                 onPressed: _loading
                     ? null

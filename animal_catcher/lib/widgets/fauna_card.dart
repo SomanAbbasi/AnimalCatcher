@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import '../models/fauna_card_model.dart';
 import '../theme/app_theme.dart';
 import 'glass_container.dart';
-import 'wiki_image.dart';
+import 'safe_network_image.dart';
 
-/// Collectible card with Wikipedia (or local) photograph as the hero art.
+/// Collectible card with the player's own capture (or the shared reference
+/// photo) as the hero art. Pure collection — no combat stats.
 class FaunaCardWidget extends StatefulWidget {
   const FaunaCardWidget({
     super.key,
@@ -95,9 +96,9 @@ class _CardBack extends StatelessWidget {
     return GlassContainer(
       width: w,
       height: h,
-      borderColor: AppColors.neonCyan,
+      borderColor: AppColors.accent,
       child: const Center(
-        child: Icon(Icons.blur_on_rounded, size: 80, color: AppColors.neonCyan),
+        child: Icon(Icons.blur_on_rounded, size: 80, color: AppColors.accent),
       ),
     );
   }
@@ -124,10 +125,7 @@ class _CardFront extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: AppColors.surface,
-        border: Border.all(color: trim, width: 2),
-        boxShadow: [
-          BoxShadow(color: trim.withValues(alpha: 0.45), blurRadius: 18),
-        ],
+        border: Border.all(color: trim, width: 1.5),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -158,7 +156,7 @@ class _CardFront extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(card.habitatIcon, size: 16, color: trim),
+                    Icon(card.categoryIcon, size: 16, color: trim),
                     const SizedBox(width: 6),
                     _pill(trim),
                   ],
@@ -177,7 +175,15 @@ class _CardFront extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(height: 6),
-                _statsRow(),
+                Text(
+                  card.category.toUpperCase(),
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.0,
+                  ),
+                ),
               ],
             ),
           ),
@@ -189,15 +195,16 @@ class _CardFront extends StatelessWidget {
   Widget _art() {
     Widget image;
     if (card.hasLocalPhoto) {
-      image = Image.file(File(card.photoPath!), fit: BoxFit.cover);
-    } else if (card.hasRemoteImage) {
-      image = WikiImage(
-        url: card.imageUrl,
+      image = Image.file(
+        File(card.photoPath!),
         fit: BoxFit.cover,
-        error: _placeholder(),
+        errorBuilder: (_, _, _) => _placeholder(),
       );
     } else {
-      image = _placeholder();
+      image = SafeNetworkImage(
+        url: card.referencePhotoUrl,
+        iconSize: compact ? 42 : 64,
+      );
     }
     return Stack(
       fit: StackFit.expand,
@@ -230,7 +237,7 @@ class _CardFront extends StatelessWidget {
         child: Icon(
           Icons.pets,
           size: compact ? 42 : 64,
-          color: Colors.white24,
+          color: AppColors.textMuted,
         ),
       );
 
@@ -238,8 +245,7 @@ class _CardFront extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: trim),
-          color: trim.withValues(alpha: 0.18),
+          border: Border.all(color: trim, width: 1.5),
         ),
         child: Text(
           card.rarity.label.toUpperCase(),
@@ -250,37 +256,4 @@ class _CardFront extends StatelessWidget {
           ),
         ),
       );
-
-  Widget _statsRow() {
-    return Row(
-      children: [
-        _stat(Icons.favorite, '${card.maxHp}', AppColors.neonPink),
-        _stat(Icons.bolt, '${card.attack}', AppColors.warning),
-        _stat(Icons.speed, '${card.speed}', AppColors.neonCyan),
-        _stat(Icons.shield, '${card.defense}', AppColors.neonPurple),
-      ],
-    );
-  }
-
-  Widget _stat(IconData icon, String value, Color color) {
-    return Expanded(
-      child: Row(
-        children: [
-          Icon(icon, size: 12, color: color),
-          const SizedBox(width: 2),
-          Flexible(
-            child: Text(
-              value,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

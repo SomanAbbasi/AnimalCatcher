@@ -7,7 +7,6 @@ import '../state/session_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_container.dart';
 import '../widgets/neon_button.dart';
-import 'arena_screen.dart';
 import 'camera_screen.dart';
 
 /// Profile / hub tab: currencies, quick actions, and settings.
@@ -15,12 +14,10 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
     this.onOpenScan,
-    this.onOpenArena,
   });
 
   /// When provided (shell mode), switch tabs instead of pushing routes.
   final VoidCallback? onOpenScan;
-  final VoidCallback? onOpenArena;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                 _actionTile(
                   context,
                   title: 'SCAN WILDLIFE',
-                  subtitle: 'Capture real animals into battle cards',
+                  subtitle: 'Identify real animals and add them to your dex',
                   icon: Icons.center_focus_strong,
-                  color: AppColors.neonGreen,
+                  color: AppColors.accent,
                   onTap: () {
                     context.read<AudioManager>().tap();
                     if (onOpenScan != null) {
@@ -64,24 +61,6 @@ class HomeScreen extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(height: 12),
-                _actionTile(
-                  context,
-                  title: 'ENTER ARENA',
-                  subtitle: 'Battle wild bosses in turn-based combat',
-                  icon: Icons.sports_kabaddi,
-                  color: AppColors.neonPink,
-                  onTap: () {
-                    context.read<AudioManager>().tap();
-                    if (onOpenArena != null) {
-                      onOpenArena!();
-                    } else {
-                      _go(context, const ArenaScreen());
-                    }
-                  },
-                ),
-                const SizedBox(height: 12),
-                _teamPanel(session),
                 const SizedBox(height: 24),
                 _profilePanel(context, profile?.username ?? 'Player'),
               ],
@@ -99,13 +78,10 @@ class HomeScreen extends StatelessWidget {
   Widget _header(BuildContext context, SessionProvider session) {
     final cls = session.profile?.startingClass;
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          cls?.emblemIcon ?? Icons.person,
-          size: 40,
-          color: AppColors.neonPurple,
-        ),
-        const SizedBox(width: 12),
+        _levelBadge(session.level),
+        const SizedBox(width: 14),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,8 +90,9 @@ class HomeScreen extends StatelessWidget {
                 session.profile?.username ?? 'Player',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTheme.heading(AppColors.neonPurple, size: 22),
+                style: AppTheme.heading(AppColors.neonGreen, size: 22),
               ),
+              const SizedBox(height: 2),
               Text(
                 cls?.label ??
                     'Recruit  •  Rank ${session.profile?.playerRank ?? 1}',
@@ -123,12 +100,75 @@ class HomeScreen extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTheme.label,
               ),
+              const SizedBox(height: 8),
+              _xpBar(session),
             ],
           ),
         ),
         IconButton(
           icon: const Icon(Icons.logout_rounded, color: AppColors.textMuted),
           onPressed: () => context.read<SessionProvider>().logout(),
+        ),
+      ],
+    );
+  }
+
+  /// Circular level badge: an accent ring around a "LVL n" label.
+  Widget _levelBadge(int level) {
+    return Container(
+      width: 56,
+      height: 56,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.neonGreen.withValues(alpha: 0.12),
+        border: Border.all(color: AppColors.neonGreen, width: 3),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'LVL',
+            style: TextStyle(
+              color: AppColors.neonGreen.withValues(alpha: 0.8),
+              fontSize: 9,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1,
+            ),
+          ),
+          Text(
+            '$level',
+            style: const TextStyle(
+              color: AppColors.neonGreen,
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              height: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// XP progress bar with "{xp} / {nextThreshold} XP" caption.
+  Widget _xpBar(SessionProvider session) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: LinearProgressIndicator(
+            value: session.levelProgress,
+            minHeight: 8,
+            backgroundColor: Colors.white.withValues(alpha: 0.08),
+            valueColor:
+                const AlwaysStoppedAnimation<Color>(AppColors.neonGreen),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '${session.xp} / ${session.xpForNextLevel} XP',
+          style: AppTheme.label.copyWith(fontSize: 11),
         ),
       ],
     );
@@ -141,7 +181,7 @@ class HomeScreen extends StatelessWidget {
           child: _currencyChip(
             'GOLD',
             session.gold,
-            AppColors.rarityLegendary,
+            AppColors.accent,
             Icons.monetization_on_rounded,
           ),
         ),
@@ -150,7 +190,7 @@ class HomeScreen extends StatelessWidget {
           child: _currencyChip(
             'WILD ESSENCE',
             session.wildEssence,
-            AppColors.neonCyan,
+            AppColors.accent,
             Icons.eco_rounded,
           ),
         ),
@@ -245,63 +285,6 @@ class HomeScreen extends StatelessWidget {
             Icon(Icons.chevron_right_rounded, color: color),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _teamPanel(SessionProvider session) {
-    final team = session.battleTeam;
-    return GlassContainer(
-      borderColor: AppColors.neonGreen,
-      glow: false,
-      borderWidth: 1.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.groups_rounded,
-                  color: AppColors.neonGreen, size: 20),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  session.isGuest
-                      ? 'BATTLE TEAM (${team.length})'
-                      : 'BATTLE TEAM (${team.length}/6)',
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTheme.label.copyWith(color: AppColors.neonGreen),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          if (team.isEmpty)
-            const Text(
-              'No cards yet — scan wildlife to build your team.',
-              style: TextStyle(color: AppColors.textMuted, fontSize: 12),
-            )
-          else
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: team
-                  .map(
-                    (c) => Chip(
-                      backgroundColor: AppColors.forRarity(c.rarity)
-                          .withValues(alpha: 0.2),
-                      side: BorderSide(color: AppColors.forRarity(c.rarity)),
-                      label: Text(
-                        c.name,
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-        ],
       ),
     );
   }

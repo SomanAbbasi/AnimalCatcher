@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'arena_screen.dart';
+import 'achievements_screen.dart';
 import 'camera_screen.dart';
 import 'collection_screen.dart';
+import 'friends_screen.dart';
 import 'home_screen.dart';
 
-enum MainShellTab { profile, scan, collection, arena }
+enum MainShellTab { profile, collection, scan, achievements, friends }
 
-/// Persistent 4-tab shell with a raised Scan button in the center.
+/// Persistent 5-tab shell with a raised Scan button in the center.
 class MainShell extends StatefulWidget {
   const MainShell({super.key, this.initialTab = MainShellTab.profile});
 
@@ -32,13 +33,11 @@ class _MainShellState extends State<MainShell> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      HomeScreen(
-        onOpenScan: () => goToTab(MainShellTab.scan),
-        onOpenArena: () => goToTab(MainShellTab.arena),
-      ),
-      CameraScreen(embedded: true, isActive: _index == 1),
+      HomeScreen(onOpenScan: () => goToTab(MainShellTab.scan)),
       const CollectionScreen(),
-      const ArenaScreen(),
+      CameraScreen(embedded: true, isActive: _index == MainShellTab.scan.index),
+      const AchievementsScreen(),
+      const FriendsScreen(),
     ];
 
     return Scaffold(
@@ -65,13 +64,6 @@ class _BottomNav extends StatelessWidget {
         border: Border(
           top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.4),
-            blurRadius: 12,
-            offset: const Offset(0, -2),
-          ),
-        ],
       ),
       child: SafeArea(
         top: false,
@@ -79,11 +71,17 @@ class _BottomNav extends StatelessWidget {
           height: 64,
           child: Row(
             children: [
-              // Visual order: Profile | Collection | Scan (raised) | Arena
-              _navItem(0, Icons.person_outline, Icons.person, 'Profile'),
-              _navItem(2, Icons.grid_view_outlined, Icons.grid_view, 'Collection'),
+              // Order: Profile | Collection | Scan (raised) | Achievements | Friends
+              _navItem(MainShellTab.profile.index, Icons.person_outline,
+                  Icons.person, 'Profile'),
+              _navItem(MainShellTab.collection.index, Icons.grid_view_outlined,
+                  Icons.grid_view, 'Collection'),
               _scanButton(),
-              _navItem(3, Icons.sports_kabaddi_outlined, Icons.sports_kabaddi, 'Arena'),
+              _navItem(MainShellTab.achievements.index,
+                  Icons.emoji_events_outlined, Icons.emoji_events,
+                  'Achievements'),
+              _navItem(MainShellTab.friends.index, Icons.group_outlined,
+                  Icons.group, 'Friends'),
             ],
           ),
         ),
@@ -101,15 +99,17 @@ class _BottomNav extends StatelessWidget {
           children: [
             Icon(
               selected ? filled : outlined,
-              color: selected ? AppColors.neonGreen : AppColors.textMuted,
+              color: selected ? AppColors.accent : AppColors.textMuted,
               size: 24,
             ),
             const SizedBox(height: 2),
             Text(
               label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: selected ? AppColors.neonGreen : AppColors.textMuted,
-                fontSize: 10,
+                color: selected ? AppColors.accent : AppColors.textMuted,
+                fontSize: 9,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -120,11 +120,11 @@ class _BottomNav extends StatelessWidget {
   }
 
   Widget _scanButton() {
-    final selected = index == 1;
+    final selected = index == MainShellTab.scan.index;
     return Expanded(
       child: Center(
         child: GestureDetector(
-          onTap: () => onSelect(1),
+          onTap: () => onSelect(MainShellTab.scan.index),
           child: Transform.translate(
             offset: const Offset(0, -14),
             child: Container(
@@ -132,14 +132,7 @@ class _BottomNav extends StatelessWidget {
               height: 58,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.neonGreen,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.neonGreen.withValues(alpha: 0.45),
-                    blurRadius: 14,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                color: AppColors.accent,
                 border: Border.all(
                   color: selected ? Colors.white : Colors.transparent,
                   width: 2,

@@ -2,27 +2,33 @@ import 'package:flutter/material.dart';
 
 import '../models/fauna_card_model.dart';
 
-/// Dark cyberpunk palette — neon green interactivity, magenta hazards.
+/// Pure-collection palette: near-black background with a single green accent.
+/// Rarity colors exist ONLY for the thin border + small tag on cards.
 class AppColors {
   AppColors._();
 
-  static const Color background = Color(0xFF05060B);
-  static const Color surface = Color(0xFF0C0F1A);
-  static const Color surfaceAlt = Color(0xFF141926);
+  static const Color background = Color(0xFF0E1410);
+  static const Color surface = Color(0xFF141A16);
+  static const Color surfaceAlt = Color(0xFF1B231D);
 
-  static const Color neonGreen = Color(0xFF39FF14);
-  static const Color neonPink = Color(0xFFFF2E88);
-  static const Color neonMagenta = Color(0xFFFF2E88);
-  static const Color neonPurple = Color(0xFFB026FF);
-  static const Color neonCyan = Color(0xFF00E5FF);
+  /// The one and only interactive accent.
+  static const Color accent = Color(0xFF39E75F);
 
-  static const Color accent = neonGreen;
-  static const Color danger = neonMagenta;
-  static const Color warning = Color(0xFFF59E0B);
+  // Legacy neon names retained as aliases so existing widgets stay on-palette.
+  // Every one now resolves to the single green accent.
+  static const Color neonGreen = accent;
+  static const Color neonPink = accent;
+  static const Color neonMagenta = accent;
+  static const Color neonPurple = accent;
+  static const Color neonCyan = accent;
 
-  static const Color textPrimary = Color(0xFFEAF2FF);
-  static const Color textMuted = Color(0xFF8592AD);
+  static const Color danger = accent;
+  static const Color warning = accent;
 
+  static const Color textPrimary = Color(0xFFEAF3EC);
+  static const Color textMuted = Color(0xFF8A968C);
+
+  // Rarity: Slate / Emerald / Purple / Gold — used only for card border + tag.
   static const Color rarityCommon = Color(0xFF4B5563);
   static const Color rarityUncommon = Color(0xFF10B981);
   static const Color rarityRare = Color(0xFFD946EF);
@@ -40,24 +46,6 @@ class AppColors {
         return rarityLegendary;
     }
   }
-
-  static LinearGradient rarityGradient(Rarity rarity) {
-    final base = forRarity(rarity);
-    return LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [
-        base.withValues(alpha: 0.45),
-        surface.withValues(alpha: 0.95),
-      ],
-    );
-  }
-
-  static Color hpColor(double fraction) {
-    if (fraction > 0.55) return neonGreen;
-    if (fraction > 0.25) return warning;
-    return danger;
-  }
 }
 
 class AppTheme {
@@ -68,10 +56,10 @@ class AppTheme {
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: base.colorScheme.copyWith(
-        primary: AppColors.neonGreen,
-        secondary: AppColors.neonCyan,
+        primary: AppColors.accent,
+        secondary: AppColors.accent,
         surface: AppColors.surface,
-        error: AppColors.neonMagenta,
+        error: AppColors.accent,
       ),
       textTheme: base.textTheme.apply(
         bodyColor: AppColors.textPrimary,
@@ -89,15 +77,13 @@ class AppTheme {
     );
   }
 
-  static TextStyle heading(Color glow, {double size = 26}) => TextStyle(
+  /// Flat heading — no glow/shadow. [accentColor] is accepted for call-site
+  /// compatibility but the text always renders in the primary text color.
+  static TextStyle heading(Color accentColor, {double size = 26}) => TextStyle(
         fontSize: size,
         fontWeight: FontWeight.w800,
-        letterSpacing: 1.6,
+        letterSpacing: 1.0,
         color: AppColors.textPrimary,
-        shadows: [
-          Shadow(color: glow, blurRadius: 14),
-          Shadow(color: glow.withValues(alpha: 0.5), blurRadius: 28),
-        ],
       );
 
   static const TextStyle label = TextStyle(

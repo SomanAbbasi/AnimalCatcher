@@ -13,6 +13,7 @@ import '../debug/dummy_data.dart';
 import '../models/fauna_card_model.dart';
 import '../services/api_service.dart';
 import '../services/audio_manager.dart';
+import '../services/geofence_service.dart';
 import '../state/session_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/fauna_card.dart';
@@ -43,12 +44,22 @@ class _CameraScreenState extends State<CameraScreen>
   CameraController? _controller;
   bool _cameraAvailable = false;
   final ApiService _api = ApiService();
+  final GeofenceService _geo = GeofenceService();
 
   _ScanPhase _phase = _ScanPhase.idle;
   int _statusIndex = 0;
   FaunaCard? _minted;
   bool _localSandbox = false;
   String? _banner;
+  int _xpAwarded = 0;
+
+  double? _lat;
+  double? _lng;
+  bool _zooBlocked = false;
+  bool _checkingLocation = false;
+
+  static const _zooMessage =
+      'Scans are for wild encounters only — this looks like a zoo or aquarium.';
 
   late final AnimationController _pulse = AnimationController(
     vsync: this,
@@ -80,6 +91,7 @@ class _CameraScreenState extends State<CameraScreen>
     WidgetsBinding.instance.addObserver(this);
     if (widget.isActive) {
       _setupCamera();
+      _resolveLocationAndGeofence();
     }
   }
 
@@ -89,6 +101,7 @@ class _CameraScreenState extends State<CameraScreen>
     if (oldWidget.isActive != widget.isActive) {
       if (widget.isActive && _phase == _ScanPhase.idle) {
         _setupCamera();
+        _resolveLocationAndGeofence();
       } else {
         _releaseCamera();
       }
@@ -127,6 +140,32 @@ class _CameraScreenState extends State<CameraScreen>
     }
   }
 
+  /// Resolve the device location, push it into the session (real capture
+  /// location), then run the zoo/aquarium geofence. Fails open: any failure
+  /// leaves [_zooBlocked] false so legitimate wild scans are never blocked.
+  Future<void> _resolveLocationAndGeofence() async {
+    if (_checkingLocation) return;
+    _checkingLocation = true;
+    try {
+      final location = await _geo.currentLocation();
+      if (!mounted) return;
+      if (location == null) {
+        setState(() => _zooBlocked = false);
+        return;
+      }
+      _lat = location.lat;
+      _lng = location.lng;
+      if (mounted) {
+        context.read<SessionProvider>().updateLocation(location.lat, location.lng);
+      }
+      final near = await _geo.isNearZooOrAquarium(location.lat, location.lng);
+      if (!mounted) return;
+      setState(() => _zooBlocked = near);
+    } finally {
+      _checkingLocation = false;
+    }
+  }
+
   Future<void> _releaseCamera() async {
     final controller = _controller;
     _controller = null;
@@ -151,6 +190,7 @@ class _CameraScreenState extends State<CameraScreen>
     _controller = null;
     controller?.dispose();
     _api.dispose();
+    _geo.dispose();
     super.dispose();
   }
 
@@ -164,6 +204,10 @@ class _CameraScreenState extends State<CameraScreen>
 
   Future<void> _capture() async {
     if (_phase != _ScanPhase.idle) return;
+    if (_zooBlocked) {
+      _snack(_zooMessage);
+      return;
+    }
     context.read<AudioManager>().playSfx(Sfx.shutter);
     _flash.forward(from: 0);
 
@@ -187,6 +231,10 @@ class _CameraScreenState extends State<CameraScreen>
 
   Future<void> _pickFromGallery() async {
     if (_phase != _ScanPhase.idle) return;
+    if (_zooBlocked) {
+      _snack(_zooMessage);
+      return;
+    }
     context.read<AudioManager>().tap();
     final picked = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -215,16 +263,26 @@ class _CameraScreenState extends State<CameraScreen>
       final result = await _api.scan(
         userId: session.profile?.userId ?? 'anonymous',
         imageBase64: imageBase64,
-        lat: session.profile?.locationLat,
-        lng: session.profile?.locationLng,
+        lat: _lat ?? session.profile?.locationLat,
+        lng: _lng ?? session.profile?.locationLng,
       );
       if (!mounted) return;
       final card = result.card.copyWith(photoPath: photoPath);
+      final wasNew = !session.hasCaught(card.name);
+      session.applyScanXp(
+        awarded: result.xpAwarded,
+        xp: result.xp,
+        level: result.level,
+        wasNew: wasNew,
+      );
       await _releaseCamera();
       if (!mounted) return;
       setState(() {
         _minted = card;
         _localSandbox = result.localSandbox;
+        _xpAwarded = result.xpAwarded > 0
+            ? result.xpAwarded
+            : (wasNew ? 50 : 5);
         _phase = _ScanPhase.awaitingTap;
         _banner = result.localSandbox ? 'Local Scan Complete' : null;
       });
@@ -238,11 +296,19 @@ class _CameraScreenState extends State<CameraScreen>
       if (e.type == ScanErrorType.network || e.type == ScanErrorType.timeout) {
         final mock = kSandboxStarterCards[
             math.Random().nextInt(kSandboxStarterCards.length)];
+        final wasNew = !session.hasCaught(mock.name);
+        session.applyScanXp(
+          awarded: 0,
+          xp: 0,
+          level: session.level,
+          wasNew: wasNew,
+        );
         await _releaseCamera();
         if (!mounted) return;
         setState(() {
           _minted = mock.copyWith(photoPath: photoPath);
           _localSandbox = true;
+          _xpAwarded = wasNew ? 50 : 5;
           _banner = 'Local Scan Complete';
           _phase = _ScanPhase.awaitingTap;
         });
@@ -277,16 +343,17 @@ class _CameraScreenState extends State<CameraScreen>
     setState(() => _phase = _ScanPhase.revealed);
   }
 
-  void _addToDeck() {
+  void _addToCollection() {
     if (_minted == null) return;
     final session = context.read<SessionProvider>();
-    session.addToTeam(_minted!);
+    session.addToCollection(_minted!);
     session.addRewards(gold: 10, wildEssence: 5);
     context.read<AudioManager>().tap();
     setState(() {
       _phase = _ScanPhase.idle;
       _minted = null;
       _banner = null;
+      _xpAwarded = 0;
       _flip.reset();
     });
     if (widget.isActive) {
@@ -451,40 +518,77 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Widget _bottomControls() {
+    final captureColor =
+        _zooBlocked ? AppColors.textMuted : AppColors.accent;
     return SafeArea(
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 28),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _sideBtn(Icons.photo_library, 'Gallery', _pickFromGallery),
-              const SizedBox(width: 28),
-              GestureDetector(
-                onTap: _capture,
-                child: Container(
-                  width: 78,
-                  height: 78,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.neonGreen, width: 4),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.neonGreen.withValues(alpha: 0.5),
-                        blurRadius: 20,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (_zooBlocked) _zooBanner(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 28),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _sideBtn(Icons.photo_library, 'Gallery', _pickFromGallery),
+                  const SizedBox(width: 28),
+                  Opacity(
+                    opacity: _zooBlocked ? 0.4 : 1.0,
+                    child: GestureDetector(
+                      onTap: _capture,
+                      child: Container(
+                        width: 78,
+                        height: 78,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: captureColor, width: 4),
+                        ),
+                        child: Icon(
+                          _zooBlocked ? Icons.block : Icons.camera_alt,
+                          color: captureColor,
+                          size: 30,
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                  child: const Icon(Icons.camera_alt,
-                      color: AppColors.neonGreen, size: 30),
-                ),
+                  const SizedBox(width: 28),
+                  const SizedBox(width: 56),
+                ],
               ),
-              const SizedBox(width: 28),
-              const SizedBox(width: 56),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _zooBanner() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.warning.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.warning),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.info_outline, color: AppColors.warning, size: 20),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              _zooMessage,
+              style: const TextStyle(
+                color: AppColors.warning,
+                fontWeight: FontWeight.w700,
+                fontSize: 12.5,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -578,14 +682,13 @@ class _CameraScreenState extends State<CameraScreen>
     return Positioned.fill(
       child: Container(
         decoration: const BoxDecoration(
-          // Wooden / felt table aesthetic behind the deck draw.
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF3A2618),
-              Color(0xFF1E140E),
-              Color(0xFF0C0A08),
+              Color(0xFF16211A),
+              Color(0xFF0E1410),
+              Color(0xFF0A0E0B),
             ],
           ),
         ),
@@ -644,6 +747,23 @@ class _CameraScreenState extends State<CameraScreen>
                     ),
                   ),
                 if (_phase == _ScanPhase.revealed) ...[
+                  if (_xpAwarded > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 7),
+                        decoration: BoxDecoration(
+                          color: AppColors.neonGreen.withValues(alpha: 0.16),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.neonGreen),
+                        ),
+                        child: Text(
+                          '+$_xpAwarded XP',
+                          style: AppTheme.heading(AppColors.neonGreen, size: 16),
+                        ),
+                      ),
+                    ),
                   if (_localSandbox)
                     const Padding(
                       padding: EdgeInsets.only(bottom: 8),
@@ -653,8 +773,8 @@ class _CameraScreenState extends State<CameraScreen>
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: NeonButton(
-                      label: 'ADD TO MY DECK',
-                      onPressed: _addToDeck,
+                      label: 'ADD TO COLLECTION',
+                      onPressed: _addToCollection,
                     ),
                   ),
                 ],
@@ -674,17 +794,6 @@ class _CameraScreenState extends State<CameraScreen>
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: const Color(0xFF8FAE8A), width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.45),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-          BoxShadow(
-            color: AppColors.neonCyan.withValues(alpha: 0.25),
-            blurRadius: 22,
-          ),
-        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
@@ -706,13 +815,12 @@ class _CameraScreenState extends State<CameraScreen>
             right: 0,
             bottom: 18,
             child: Text(
-              'FAUNA BATTLER',
+              'FAUNA DEX',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.85),
                 fontWeight: FontWeight.w900,
                 letterSpacing: 2,
-                shadows: const [Shadow(color: Colors.black54, blurRadius: 6)],
               ),
             ),
           ),
