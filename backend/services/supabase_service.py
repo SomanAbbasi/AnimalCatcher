@@ -513,6 +513,56 @@ class SupabaseService:
             logger.error("upsert_catalog_entry failed: %s", exc)
             return False
 
+    def ensure_catalog_entry(self, card: FaunaCardModel) -> bool:
+        """Open dex: add a scanned species to the shared catalog if new.
+
+        Keyed on the stable taxon id. The catalog grows over time so that a
+        species discovered by any player becomes a (locked) dex tile for
+        everyone. No-op when the card has no taxon id.
+        """
+        client = self._get_client()
+        if client is None or card.taxon_id is None:
+            return False
+        try:
+            existing = (
+                client.table(self.CATALOG_TABLE)
+                .select("taxon_id")
+                .eq("taxon_id", card.taxon_id)
+                .limit(1)
+                .execute()
+            )
+            if existing.data:
+                return False  # already catalogued
+
+            top = (
+                client.table(self.CATALOG_TABLE)
+                .select("dex_number")
+                .order("dex_number", desc=True)
+                .limit(1)
+                .execute()
+            )
+            next_dex = 1
+            if top.data:
+                next_dex = int(top.data[0].get("dex_number") or 0) + 1
+
+            rarity = (
+                card.rarity.value
+                if hasattr(card.rarity, "value")
+                else str(card.rarity)
+            )
+            return self.upsert_catalog_entry(
+                taxon_id=int(card.taxon_id),
+                dex_number=next_dex,
+                name=card.name,
+                scientific_name=card.scientific_name,
+                category=card.category or "Wildlife",
+                rarity=rarity,
+                reference_photo_url=card.reference_photo_url or "",
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.error("ensure_catalog_entry failed: %s", exc)
+            return False
+
     def get_collection_progress(self, user_id: str) -> dict[str, Any]:
         """Compute dex completion (overall + per category) for a player.
 

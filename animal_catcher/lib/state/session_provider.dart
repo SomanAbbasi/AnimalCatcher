@@ -110,8 +110,8 @@ class SessionProvider extends ChangeNotifier {
 
   /// Load the master catalog: backend first, bundled asset as a fallback so
   /// the dex works offline / in guest mode. Identical data either way.
-  Future<void> loadCatalog() async {
-    if (_catalog.isNotEmpty) return;
+  Future<void> loadCatalog({bool force = false}) async {
+    if (_catalog.isNotEmpty && !force) return;
     try {
       final remote = await _api.fetchCatalog();
       if (remote.isNotEmpty) {
@@ -220,6 +220,7 @@ class SessionProvider extends ChangeNotifier {
       notifyListeners();
       await _hydrateProfile(result.userId);
       await _hydrateInventory(result.userId);
+      await loadCatalog(force: true);
     } catch (_) {
       // Supabase down — fall through to sandbox so onboarding never bricks.
       await enterSandboxLogin(
@@ -246,6 +247,7 @@ class SessionProvider extends ChangeNotifier {
       notifyListeners();
       await _hydrateProfile(result.userId);
       await _hydrateInventory(result.userId);
+      await loadCatalog(force: true);
     } catch (_) {
       await enterSandboxLogin(username: email.split('@').first);
     }
@@ -345,6 +347,33 @@ class SessionProvider extends ChangeNotifier {
     } else {
       _collection.add(card);
     }
+    _growCatalogFromCard(card);
+  }
+
+  /// Open dex: if the caught species isn't in the catalog yet, append it so the
+  /// dex grows immediately (the backend persists it for everyone too).
+  void _growCatalogFromCard(FaunaCard card) {
+    final taxonId = card.taxonId;
+    if (taxonId == null) return;
+    if (_catalog.any((e) => e.taxonId == taxonId)) return;
+    final nextDex = _catalog.isEmpty
+        ? 1
+        : _catalog
+                .map((e) => e.dexNumber)
+                .reduce((a, b) => a > b ? a : b) +
+            1;
+    _catalog = [
+      ..._catalog,
+      CatalogEntry(
+        taxonId: taxonId,
+        dexNumber: nextDex,
+        name: card.name,
+        scientificName: card.scientificName,
+        category: card.category,
+        rarity: card.rarity,
+        referencePhotoUrl: card.referencePhotoUrl,
+      ),
+    ];
   }
 
   Future<void> _persist() async {

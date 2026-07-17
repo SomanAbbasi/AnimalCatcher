@@ -76,7 +76,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '$caughtCount / $total species discovered',
+                    '$caughtCount caught / $total species known',
                     style: const TextStyle(
                       color: AppColors.accent,
                       fontWeight: FontWeight.w700,

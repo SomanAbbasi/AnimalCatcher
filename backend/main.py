@@ -128,6 +128,8 @@ def scan(payload: ScanRequest) -> ScanResponse:
         if saved:
             xp_awarded = 50 if is_new else 5
             xp, level = supabase_service.award_xp(payload.user_id, xp_awarded)
+            # Open dex: a newly-seen species becomes a tile for everyone.
+            supabase_service.ensure_catalog_entry(card)
 
     # Step 3: respond.
     return ScanResponse(
