@@ -176,6 +176,8 @@ def species(name: str) -> SpeciesInfoResponse:
         reference_photo_url=info["reference_photo_url"],
         category=info["category"],
         wiki_url=info["wiki_url"],
+        taxon_id=info.get("taxon_id"),
+        scientific_name=str(info.get("scientific_name") or ""),
     )
 
 

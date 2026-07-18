@@ -40,11 +40,11 @@ void main() {
   testWidgets('App boots to onboarding lore screen', (WidgetTester tester) async {
     await tester.pumpWidget(const FaunaBattlerApp());
 
-    // Let SessionProvider.bootstrap() resolve and the root gate settle.
-    for (var i = 0; i < 5; i++) {
+    // Let SessionProvider.bootstrap() + catalog load settle.
+    for (var i = 0; i < 20; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
 
-    expect(find.text('THE RIFT IS OPEN'), findsOneWidget);
+    expect(find.text('EXPLORE THE WILD'), findsOneWidget);
   });
 }

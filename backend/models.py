@@ -53,6 +53,10 @@ class SpeciesInfoResponse(BaseModel):
     reference_photo_url: str = ""
     category: str = "Wildlife"
     wiki_url: str = ""
+    # Stable iNaturalist taxon id — required so guest seed hydration can
+    # unlock the matching dex tile (matching by name alone is unreliable).
+    taxon_id: Optional[int] = None
+    scientific_name: str = ""
 
 
 class ScanRequest(BaseModel):

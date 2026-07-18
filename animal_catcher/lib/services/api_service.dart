@@ -153,12 +153,16 @@ class SpeciesInfo {
     required this.referencePhotoUrl,
     required this.category,
     required this.wikiUrl,
+    this.taxonId,
+    this.scientificName = '',
   });
 
   final String name;
   final String referencePhotoUrl;
   final String category;
   final String wikiUrl;
+  final int? taxonId;
+  final String scientificName;
 }
 
 /// REST client for the FastAPI backend (`/api/scan`, `/api/inventory/...`).
@@ -261,6 +265,8 @@ class ApiService {
         referencePhotoUrl: (body['reference_photo_url'] ?? '').toString(),
         category: (body['category'] ?? 'Wildlife').toString(),
         wikiUrl: (body['wiki_url'] ?? '').toString(),
+        taxonId: ProfileSummary._asIntOrNull(body['taxon_id']),
+        scientificName: (body['scientific_name'] ?? '').toString(),
       );
     }
 

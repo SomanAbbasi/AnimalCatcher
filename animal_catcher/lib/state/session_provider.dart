@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../debug/dummy_data.dart';
 import '../models/catalog_entry.dart';
+import '../models/dex_progress.dart';
 import '../models/fauna_card_model.dart';
 import '../models/profile_model.dart';
 import '../services/api_service.dart';
@@ -22,9 +23,9 @@ class SessionProvider extends ChangeNotifier {
     AuthService? authService,
     FlutterSecureStorage? storage,
     ApiService? apiService,
-  })  : _auth = authService ?? AuthService(),
-        _storage = storage ?? const FlutterSecureStorage(),
-        _api = apiService ?? ApiService();
+  }) : _auth = authService ?? AuthService(),
+       _storage = storage ?? const FlutterSecureStorage(),
+       _api = apiService ?? ApiService();
 
   final AuthService _auth;
   final FlutterSecureStorage _storage;
@@ -47,19 +48,72 @@ class SessionProvider extends ChangeNotifier {
   List<CatalogEntry> get catalog => List.unmodifiable(_catalog);
 
   /// Taxon ids the player has collected (for dex unlock matching).
-  Set<int> get caughtTaxonIds => {
-        for (final c in _collection)
-          if (c.taxonId != null) c.taxonId!,
-      };
+  ///
+  /// Cards missing a taxon id (legacy guest seeds / offline mocks) are resolved
+  /// against the catalog by normalized name so tiles still unlock.
+  Set<int> get caughtTaxonIds {
+    final ids = <int>{};
+    for (final c in _collection) {
+      final tid = c.taxonId ?? _catalogTaxonForName(c.name);
+      if (tid != null) ids.add(tid);
+    }
+    return ids;
+  }
 
-  bool isCaughtTaxon(int taxonId) =>
-      _collection.any((c) => c.taxonId == taxonId);
+  bool isCaughtTaxon(int taxonId) => caughtTaxonIds.contains(taxonId);
 
   FaunaCard? cardForTaxon(int taxonId) {
     for (final c in _collection) {
       if (c.taxonId == taxonId) return c;
     }
+    // Guest / offline cards may lack taxonId — match via catalog name.
+    final entry = _catalogEntryForTaxon(taxonId);
+    if (entry == null) return null;
+    for (final c in _collection) {
+      if (c.taxonId == null && _namesMatch(c.name, entry.name)) return c;
+    }
     return null;
+  }
+
+  CatalogEntry? _catalogEntryForTaxon(int taxonId) {
+    for (final e in _catalog) {
+      if (e.taxonId == taxonId) return e;
+    }
+    return null;
+  }
+
+  /// Resolve a catalog taxon id from a free-text species name.
+  int? _catalogTaxonForName(String name) {
+    for (final e in _catalog) {
+      if (_namesMatch(e.name, name)) return e.taxonId;
+    }
+    return null;
+  }
+
+  static bool _namesMatch(String a, String b) =>
+      _normalizeName(a) == _normalizeName(b);
+
+  static String _normalizeName(String name) =>
+      name.trim().toLowerCase().split(RegExp(r'\s+')).join(' ');
+
+  /// One-pass dex discovery snapshot for Awards + Collection.
+  DexProgress get dexProgress =>
+      DexProgress.from(catalog: _catalog, caughtTaxonIds: caughtTaxonIds);
+
+  /// Test/helper hook to seed catalog + collection without going through the API.
+  @visibleForTesting
+  void debugSeed({
+    List<CatalogEntry> catalog = const [],
+    List<FaunaCard> collection = const [],
+    PlayerProfile? profile,
+  }) {
+    _catalog = List.of(catalog);
+    _collection
+      ..clear()
+      ..addAll(collection);
+    if (profile != null) _profile = profile;
+    _initializing = false;
+    notifyListeners();
   }
 
   int get gold => _profile?.gold ?? 0;
@@ -123,8 +177,9 @@ class SessionProvider extends ChangeNotifier {
       // Fall through to the bundled asset.
     }
     try {
-      final raw =
-          await rootBundle.loadString('assets/data/species_catalog.json');
+      final raw = await rootBundle.loadString(
+        'assets/data/species_catalog.json',
+      );
       final list = jsonDecode(raw) as List<dynamic>;
       _catalog = list
           .map((e) => CatalogEntry.fromJson(e as Map<String, dynamic>))
@@ -176,6 +231,9 @@ class SessionProvider extends ChangeNotifier {
   /// Fetch the shared reference data for each seed species from the backend
   /// and add the resulting cards to the collection. Degrades gracefully: if a
   /// lookup fails the card is still added (SafeNetworkImage shows a placeholder).
+  ///
+  /// Always stamps a taxon id when possible (API or local catalog match) so
+  /// guest seed catches light up the matching dex tiles.
   Future<void> _hydrateSeedSpecies() async {
     for (final seed in kSpeciesSeeds) {
       FaunaCard card = seed;
@@ -185,6 +243,10 @@ class SessionProvider extends ChangeNotifier {
           referencePhotoUrl: info.referencePhotoUrl,
           category: info.category,
           wikiUrl: info.wikiUrl,
+          taxonId: info.taxonId,
+          scientificName: info.scientificName.isNotEmpty
+              ? info.scientificName
+              : null,
         );
       } catch (_) {
         // Keep the bare seed; the tile falls back to a muted pets placeholder.
@@ -229,10 +291,7 @@ class SessionProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> login({required String email, required String password}) async {
     try {
       final result = await _auth.signIn(email: email, password: password);
       _isGuest = false;
@@ -301,10 +360,7 @@ class SessionProvider extends ChangeNotifier {
     try {
       final summary = await _api.fetchProfile(userId);
       if (_profile != null && _profile!.userId == userId) {
-        _profile = _profile!.copyWith(
-          xp: summary.xp,
-          level: summary.level,
-        );
+        _profile = _profile!.copyWith(xp: summary.xp, level: summary.level);
         await _persist();
         notifyListeners();
       }
@@ -336,18 +392,42 @@ class SessionProvider extends ChangeNotifier {
   }
 
   void _addToCollection(FaunaCard card) {
-    final idx = _collection.indexWhere((c) {
-      if (card.taxonId != null && c.taxonId != null) {
-        return c.taxonId == card.taxonId;
+    // Stamp a catalog taxon id onto guest/offline cards that lack one so the
+    // dex unlock path (caughtTaxonIds) works without a server round-trip.
+    var resolved = card;
+    if (resolved.taxonId == null) {
+      final tid = _catalogTaxonForName(resolved.name);
+      if (tid != null) {
+        final entry = _catalogEntryForTaxon(tid);
+        resolved = resolved.copyWith(
+          taxonId: tid,
+          scientificName:
+              (resolved.scientificName.isEmpty && entry != null)
+                  ? entry.scientificName
+                  : null,
+          category: resolved.category == 'Wildlife' && entry != null
+              ? entry.category
+              : null,
+          referencePhotoUrl:
+              resolved.referencePhotoUrl.isEmpty && entry != null
+                  ? entry.referencePhotoUrl
+                  : null,
+        );
       }
-      return c.name.toLowerCase() == card.name.toLowerCase();
+    }
+
+    final idx = _collection.indexWhere((c) {
+      if (resolved.taxonId != null && c.taxonId != null) {
+        return c.taxonId == resolved.taxonId;
+      }
+      return _namesMatch(c.name, resolved.name);
     });
     if (idx >= 0) {
-      _collection[idx] = card;
+      _collection[idx] = resolved;
     } else {
-      _collection.add(card);
+      _collection.add(resolved);
     }
-    _growCatalogFromCard(card);
+    _growCatalogFromCard(resolved);
   }
 
   /// Open dex: if the caught species isn't in the catalog yet, append it so the
@@ -358,10 +438,7 @@ class SessionProvider extends ChangeNotifier {
     if (_catalog.any((e) => e.taxonId == taxonId)) return;
     final nextDex = _catalog.isEmpty
         ? 1
-        : _catalog
-                .map((e) => e.dexNumber)
-                .reduce((a, b) => a > b ? a : b) +
-            1;
+        : _catalog.map((e) => e.dexNumber).reduce((a, b) => a > b ? a : b) + 1;
     _catalog = [
       ..._catalog,
       CatalogEntry(

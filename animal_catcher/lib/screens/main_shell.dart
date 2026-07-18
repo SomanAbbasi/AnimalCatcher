@@ -34,7 +34,7 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     final pages = [
       HomeScreen(onOpenScan: () => goToTab(MainShellTab.scan)),
-      const CollectionScreen(),
+      CollectionScreen(onOpenScan: () => goToTab(MainShellTab.scan)),
       CameraScreen(embedded: true, isActive: _index == MainShellTab.scan.index),
       const AchievementsScreen(),
       const FriendsScreen(),
@@ -67,22 +67,41 @@ class _BottomNav extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: SizedBox(
-          height: 64,
-          child: Row(
-            children: [
-              // Order: Profile | Collection | Scan (raised) | Achievements | Friends
-              _navItem(MainShellTab.profile.index, Icons.person_outline,
-                  Icons.person, 'Profile'),
-              _navItem(MainShellTab.collection.index, Icons.grid_view_outlined,
-                  Icons.grid_view, 'Collection'),
-              _scanButton(),
-              _navItem(MainShellTab.achievements.index,
-                  Icons.emoji_events_outlined, Icons.emoji_events,
-                  'Achievements'),
-              _navItem(MainShellTab.friends.index, Icons.group_outlined,
-                  Icons.group, 'Friends'),
-            ],
+        // Keep nav labels a fixed size regardless of the device's system font
+        // scale so the compact bar never overflows vertically.
+        child: MediaQuery.withNoTextScaling(
+          child: SizedBox(
+            height: 66,
+            child: Row(
+              children: [
+                // Order: Profile | Collection | Scan (raised) | Awards | Friends
+                _navItem(
+                  MainShellTab.profile.index,
+                  Icons.person_outline,
+                  Icons.person,
+                  'Profile',
+                ),
+                _navItem(
+                  MainShellTab.collection.index,
+                  Icons.grid_view_outlined,
+                  Icons.grid_view,
+                  'Collection',
+                ),
+                _scanButton(),
+                _navItem(
+                  MainShellTab.achievements.index,
+                  Icons.emoji_events_outlined,
+                  Icons.emoji_events,
+                  'Awards',
+                ),
+                _navItem(
+                  MainShellTab.friends.index,
+                  Icons.group_outlined,
+                  Icons.group,
+                  'Friends',
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -94,26 +113,35 @@ class _BottomNav extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () => onSelect(i),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              selected ? filled : outlined,
-              color: selected ? AppColors.accent : AppColors.textMuted,
-              size: 24,
-            ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                selected ? filled : outlined,
                 color: selected ? AppColors.accent : AppColors.textMuted,
-                fontSize: 9,
-                fontWeight: FontWeight.w700,
+                size: 24,
               ),
-            ),
-          ],
+              const SizedBox(height: 2),
+              // scaleDown guarantees the label always fits its cell width,
+              // eliminating any horizontal overflow on narrow screens.
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: selected ? AppColors.accent : AppColors.textMuted,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -138,7 +166,11 @@ class _BottomNav extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              child: const Icon(Icons.camera_alt, color: Colors.black, size: 28),
+              child: const Icon(
+                Icons.camera_alt,
+                color: Colors.black,
+                size: 28,
+              ),
             ),
           ),
         ),

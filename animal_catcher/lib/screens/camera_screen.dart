@@ -267,7 +267,11 @@ class _CameraScreenState extends State<CameraScreen>
         lng: _lng ?? session.profile?.locationLng,
       );
       if (!mounted) return;
-      final card = result.card.copyWith(photoPath: photoPath);
+      final card = result.card.copyWith(
+        photoPath: photoPath,
+        // Prefer the card's taxon id; fall back to the top-level scan field.
+        taxonId: result.card.taxonId ?? result.taxonId,
+      );
       final wasNew = !session.hasCaught(card.name);
       session.applyScanXp(
         awarded: result.xpAwarded,
