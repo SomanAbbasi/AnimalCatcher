@@ -96,7 +96,7 @@ def scan(payload: ScanRequest) -> ScanResponse:
            the card with `saved = false` so gameplay is never fully blocked.
       3. Return the final card to the client.
     """
-    # Step 1: vision analysis (may raise HTTP 400 for anti-cheat).
+    # Step 1: vision analysis (may raise HTTP 400 / 503).
     card, is_mystery = vision_service.analyze_animal(payload.image_base64)
 
     # Attach the player's personal capture metadata.
@@ -110,11 +110,12 @@ def scan(payload: ScanRequest) -> ScanResponse:
     )
 
     # Step 2: best-effort persistence + XP award.
+    # Mystery cards never grow the global dex and award no species XP.
     saved = False
     xp_awarded = 0
     xp = 0
     level = 1
-    if settings.supabase_configured:
+    if settings.supabase_configured and not is_mystery:
         # Determine novelty BEFORE inserting so the new card doesn't count.
         is_new = not supabase_service.user_has_species(
             payload.user_id, card.name, card.taxon_id
@@ -130,13 +131,22 @@ def scan(payload: ScanRequest) -> ScanResponse:
             xp, level = supabase_service.award_xp(payload.user_id, xp_awarded)
             # Open dex: a newly-seen species becomes a tile for everyone.
             supabase_service.ensure_catalog_entry(card)
+    elif settings.supabase_configured and is_mystery:
+        # Persist the mystery capture for the player, but do not unlock dex tiles.
+        try:
+            saved = supabase_service.save_card(payload.user_id, card)
+        except HTTPException:
+            saved = False
+        profile = supabase_service.get_profile(payload.user_id) or {}
+        xp = int(profile.get("xp") or 0)
+        level = int(profile.get("level") or 1)
 
     # Step 3: respond.
     return ScanResponse(
         card=card,
         saved=saved,
         is_mystery=is_mystery,
-        local_sandbox=settings.local_sandbox_mode or not settings.vision_configured,
+        local_sandbox=settings.allow_offline_scan and not settings.vision_configured,
         xp_awarded=xp_awarded,
         xp=xp,
         level=level,

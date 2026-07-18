@@ -435,6 +435,7 @@ class SessionProvider extends ChangeNotifier {
   void _growCatalogFromCard(FaunaCard card) {
     final taxonId = card.taxonId;
     if (taxonId == null) return;
+    if (card.name.toLowerCase() == 'mystery spawn') return;
     if (_catalog.any((e) => e.taxonId == taxonId)) return;
     final nextDex = _catalog.isEmpty
         ? 1

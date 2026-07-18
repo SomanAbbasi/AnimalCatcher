@@ -60,6 +60,11 @@ class Settings:
             if raw_origins == "*"
             else [o.strip() for o in raw_origins.split(",") if o.strip()]
         )
+        # Explicit demo escape hatch: only when vision key is missing.
+        # Default OFF so scans never invent random species.
+        self.allow_offline_scan: bool = os.getenv(
+            "ALLOW_OFFLINE_SCAN", ""
+        ).strip().lower() in {"1", "true", "yes", "on"}
 
     @property
     def is_production(self) -> bool:

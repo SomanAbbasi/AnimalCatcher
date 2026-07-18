@@ -207,7 +207,9 @@ class ApiService {
       final isTimeout = e.toString().toLowerCase().contains('timeout');
       throw ApiException(
         isTimeout ? ScanErrorType.timeout : ScanErrorType.network,
-        'Could not reach the Rift servers. Check your connection.',
+        isTimeout
+            ? 'Scan timed out. The scanner needs a clearer photo or a longer wait — try again.'
+            : 'Could not reach the scanner. Start the backend and run: adb reverse tcp:8000 tcp:8000',
       );
     }
 
@@ -234,10 +236,19 @@ class ApiService {
       );
     }
 
+    if (response.statusCode == 503) {
+      throw ApiException(
+        ScanErrorType.server,
+        _extractDetail(response.body) ??
+            'Species scanner unavailable. Check the backend is running '
+            'and try again.',
+      );
+    }
+
     throw ApiException(
       ScanErrorType.server,
       _extractDetail(response.body) ??
-          'The Rift scanner malfunctioned (code ${response.statusCode}).',
+          'The scanner malfunctioned (code ${response.statusCode}).',
     );
   }
 

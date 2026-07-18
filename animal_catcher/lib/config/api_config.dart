@@ -22,6 +22,6 @@ class ApiConfig {
     defaultValue: 'http://localhost:8000',
   );
 
-  /// Timeout applied to the scan request (per the gameplay spec).
-  static const Duration scanTimeout = Duration(seconds: 10);
+  /// Timeout applied to the scan request (vision + taxonomy enrichment).
+  static const Duration scanTimeout = Duration(seconds: 45);
 }

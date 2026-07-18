@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../debug/dummy_data.dart';
 import '../models/fauna_card_model.dart';
 import '../services/api_service.dart';
 import '../services/audio_manager.dart';
@@ -272,23 +271,29 @@ class _CameraScreenState extends State<CameraScreen>
         // Prefer the card's taxon id; fall back to the top-level scan field.
         taxonId: result.card.taxonId ?? result.taxonId,
       );
-      final wasNew = !session.hasCaught(card.name);
-      session.applyScanXp(
-        awarded: result.xpAwarded,
-        xp: result.xp,
-        level: result.level,
-        wasNew: wasNew,
-      );
+      final isMystery = result.isMystery ||
+          card.name.toLowerCase() == 'mystery spawn';
+      final wasNew = !isMystery && !session.hasCaught(card.name);
+      if (!isMystery) {
+        session.applyScanXp(
+          awarded: result.xpAwarded,
+          xp: result.xp,
+          level: result.level,
+          wasNew: wasNew,
+        );
+      }
       await _releaseCamera();
       if (!mounted) return;
       setState(() {
         _minted = card;
         _localSandbox = result.localSandbox;
-        _xpAwarded = result.xpAwarded > 0
-            ? result.xpAwarded
-            : (wasNew ? 50 : 5);
+        _xpAwarded = isMystery
+            ? 0
+            : (result.xpAwarded > 0 ? result.xpAwarded : (wasNew ? 50 : 5));
         _phase = _ScanPhase.awaitingTap;
-        _banner = result.localSandbox ? 'Local Scan Complete' : null;
+        _banner = isMystery
+            ? 'Could not identify — try a clearer photo'
+            : (result.localSandbox ? 'Local Scan Complete' : null);
       });
     } on ApiException catch (e) {
       if (!mounted) return;
@@ -297,27 +302,7 @@ class _CameraScreenState extends State<CameraScreen>
         _showAnomaly(e.message);
         return;
       }
-      if (e.type == ScanErrorType.network || e.type == ScanErrorType.timeout) {
-        final mock = kSandboxStarterCards[
-            math.Random().nextInt(kSandboxStarterCards.length)];
-        final wasNew = !session.hasCaught(mock.name);
-        session.applyScanXp(
-          awarded: 0,
-          xp: 0,
-          level: session.level,
-          wasNew: wasNew,
-        );
-        await _releaseCamera();
-        if (!mounted) return;
-        setState(() {
-          _minted = mock.copyWith(photoPath: photoPath);
-          _localSandbox = true;
-          _xpAwarded = wasNew ? 50 : 5;
-          _banner = 'Local Scan Complete';
-          _phase = _ScanPhase.awaitingTap;
-        });
-        return;
-      }
+      // Never invent a fake species on network/timeout/server failure.
       setState(() => _phase = _ScanPhase.idle);
       _snack(e.message);
     } catch (_) {
@@ -797,41 +782,111 @@ class _CameraScreenState extends State<CameraScreen>
       height: 390,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFF8FAE8A), width: 2),
+        border: Border.all(color: AppColors.accent.withValues(alpha: 0.7), width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.accent.withValues(alpha: 0.18),
+            blurRadius: 18,
+            spreadRadius: 1,
+          ),
+        ],
       ),
       clipBehavior: Clip.antiAlias,
+      child: Image.asset(
+        'assets/images/card_back.png',
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => const _PaintedCardBack(),
+      ),
+    );
+  }
+}
+
+/// Offline / missing-asset fallback: on-brand FAUNA card back painted in Flutter.
+class _PaintedCardBack extends StatelessWidget {
+  const _PaintedCardBack();
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF16211A),
+            Color(0xFF0E1410),
+            Color(0xFF0A100C),
+          ],
+        ),
+      ),
       child: Stack(
-        fit: StackFit.expand,
+        alignment: Alignment.center,
         children: [
-          Image.asset(
-            'assets/images/card_back.png',
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: const Color(0xFF8FAE8A),
-                alignment: Alignment.center,
-                child: const Icon(Icons.style, size: 72, color: Colors.white70),
-              );
-            },
+          Positioned.fill(
+            child: CustomPaint(painter: _CardBackRingsPainter()),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 18,
-            child: Text(
-              'FAUNA DEX',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.85),
-                fontWeight: FontWeight.w900,
-                letterSpacing: 2,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.pets_rounded,
+                size: 72,
+                color: AppColors.accent.withValues(alpha: 0.9),
               ),
-            ),
+              const SizedBox(height: 14),
+              Text(
+                'FAUNA',
+                style: TextStyle(
+                  color: AppColors.textPrimary.withValues(alpha: 0.95),
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 6,
+                  fontSize: 22,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'WILD DEX',
+                style: TextStyle(
+                  color: AppColors.accent.withValues(alpha: 0.85),
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 3,
+                  fontSize: 11,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+}
+
+class _CardBackRingsPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2
+      ..color = const Color(0xFF39E75F).withValues(alpha: 0.22);
+    for (var i = 1; i <= 4; i++) {
+      canvas.drawCircle(center, 36.0 * i, paint);
+    }
+    final grid = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.6
+      ..color = const Color(0xFF39E75F).withValues(alpha: 0.08);
+    const step = 22.0;
+    for (var x = 0.0; x < size.width; x += step) {
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), grid);
+    }
+    for (var y = 0.0; y < size.height; y += step) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _GridHudPainter extends CustomPainter {
